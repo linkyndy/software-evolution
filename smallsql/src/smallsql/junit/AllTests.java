@@ -56,7 +56,7 @@ public class AllTests extends TestCase{
 	public static Connection createConnection() throws SQLException{
 		//DriverManager.setLogStream( System.out );
 		new smallsql.database.SSDriver();
-		new sun.jdbc.odbc.JdbcOdbcDriver();
+		//new sun.jdbc.odbc.JdbcOdbcDriver();
 		return DriverManager.getConnection(JDBC_URL + "?create=true;locale=en");
 		//return DriverManager.getConnection("jdbc:odbc:mssql","sa","");
 	}
@@ -76,7 +76,7 @@ public class AllTests extends TestCase{
     		Properties info) 
     throws SQLException {
 		new smallsql.database.SSDriver();
-		new sun.jdbc.odbc.JdbcOdbcDriver();
+		//new sun.jdbc.odbc.JdbcOdbcDriver();
 		
 		if (urlAddition == null) urlAddition = "";
 		if (info == null) info = new Properties();

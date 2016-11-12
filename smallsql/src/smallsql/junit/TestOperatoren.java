@@ -259,7 +259,7 @@ public class TestOperatoren extends BasicTestCase {
     }
 
     public static void main(String[] argv) {
-        junit.swingui.TestRunner.main(new String[]{TestOperatoren.class.getName()});
+        //junit.swingui.TestRunner.main(new String[]{TestOperatoren.class.getName()});
     }
 
 

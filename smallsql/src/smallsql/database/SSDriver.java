@@ -35,6 +35,7 @@ package smallsql.database;
 import java.sql.*;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import smallsql.database.language.Language;
 
@@ -131,4 +132,11 @@ public class SSDriver implements Driver {
     public boolean jdbcCompliant() {
         return true;
     }
+
+
+	@Override
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

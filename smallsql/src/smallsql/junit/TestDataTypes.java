@@ -333,6 +333,6 @@ public class TestDataTypes extends BasicTestCase{
     }
 
     public static void main(String[] argv) {
-        junit.swingui.TestRunner.main(new String[]{TestDataTypes.class.getName()});
+        //junit.swingui.TestRunner.main(new String[]{TestDataTypes.class.getName()});
     }
 }
