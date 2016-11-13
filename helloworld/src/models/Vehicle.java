@@ -2,7 +2,10 @@ package models;
 
 public abstract class Vehicle {	
 	public String vehicleType;
-	 
+	
+	/* Multi line comments
+	 * New line
+	 */
 	public Integer getNumberOfSeats()
 	{
 		if (this.vehicleType.equals("Car")) {
@@ -14,7 +17,7 @@ public abstract class Vehicle {
 		}
 		return null;
 	}
-	 
+	//Single line comments
 	public String getVehicleType()  {
 		return this.vehicleType;
 	}
