@@ -1,4 +1,4 @@
-module Volume
+module Metrics::Volume
 
 import lang::java::jdt::m3::Core;
 import Common;
@@ -7,8 +7,7 @@ import List;
 import String;
 import Set;
 
-public int volumeRating(M3 project) {
-	linesOfCode = projectVolume(project);
+public int volumeRating(int linesOfCode) {
 	if(linesOfCode <= 66000) {
 		return 5;
 	} else if(linesOfCode <= 246000) {
@@ -25,6 +24,10 @@ public int projectVolume(M3 project) = sum(mapper(getClasses(project), locOfFile
 
 public int locOfFile(loc file) {
 	plainText = fileContent(file);
+	return locOfString(plainText);
+}
+
+public int locOfString(str plainText) {
 	withoutComments = removeComments(plainText);	
 	listText = splitText(withoutComments);
 	return size(listText);

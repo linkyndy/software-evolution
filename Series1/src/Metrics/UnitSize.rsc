@@ -1,17 +1,15 @@
-module UnitSize
+module Metrics::UnitSize
 
 import lang::java::jdt::m3::Core;
 import Common;
-import Volume;
+import Metrics::Volume;
 import IO;
 import List;
 import String;
 import Set;
 import util::Math;
 
-public int unitSizeRating(M3 project) {
-	methodRisks = methodsRisks(project);
-	
+public int unitSizeRating(tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] methodRisks) {	
 	if(methodRisks.moderateRisk <= 25 && methodRisks.highRisk == 0 && methodRisks.veryHighRisk == 0) {
 		return 5;
 	} else if(methodRisks.moderateRisk <= 30 && methodRisks.highRisk == 5 && methodRisks.veryHighRisk == 0) {
@@ -26,8 +24,7 @@ public int unitSizeRating(M3 project) {
 
 public list[int] locPerMethod(M3 project) = mapper(getMethods(project), locOfFile);
 
-public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] methodsRisks(M3 project) {
-	totalVolume = projectVolume(project);
+public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] unitSizeRisks(M3 project) {
 	simpleRisk = 0;
 	moderateRisk = 0;
 	highRisk = 0;
@@ -46,6 +43,8 @@ public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRis
 		}
 	}
 	
+	totalVolume = simpleRisk + moderateRisk + highRisk + veryHighRisk;
+	
 	return <
 			calculatePercentage(simpleRisk, totalVolume), 
 			calculatePercentage(moderateRisk, totalVolume),
@@ -53,5 +52,3 @@ public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRis
 			calculatePercentage(veryHighRisk, totalVolume)
 			>;
 }
-
-private real calculatePercentage(int base, int total) = toReal(base)/toReal(total)*100;
