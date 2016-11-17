@@ -61,7 +61,7 @@ public lrel[int complexity, int unitSize] complexityForProject(M3 project) {
 }
 
 public lrel[int, int] complexityPerClass(loc class) {
-	ast = createAstFromFile(class, true);
+	ast = createAstFromFile(class, false);
 	
 	result = [];
 	visit(ast) {

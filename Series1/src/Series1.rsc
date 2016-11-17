@@ -55,8 +55,8 @@ public void analyseProject() {
 
 public M3 getProjectModel() {
 	// projectFile = |project://helloworld| ;
-	projectFile = |project://smallsql| ;
-	// projectFile = |project://hsqldb| ; 
+	// projectFile = |project://smallsql| ;
+	projectFile = |project://hsqldb| ; 
 	model = createM3FromEclipseProject(projectFile);
 	return model;
 }
