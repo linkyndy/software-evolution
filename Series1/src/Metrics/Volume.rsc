@@ -7,17 +7,17 @@ import List;
 import String;
 import Set;
 
-public int volumeRating(int linesOfCode) {
+public str volumeRating(int linesOfCode) {
 	if(linesOfCode <= 66000) {
-		return 5;
+		return "++";
 	} else if(linesOfCode <= 246000) {
-		return 4;
+		return "+";
 	} else if(linesOfCode <= 665000) {
-		return 3;
+		return "o";
 	} else if(linesOfCode <= 1310000) {
-		return 2;
+		return "-";
 	}
-	return 1;
+	return "--";
 }
 
 public int projectVolume(M3 project) = sum(mapper(getClasses(project), locOfFile));
