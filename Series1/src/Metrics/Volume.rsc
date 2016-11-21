@@ -40,4 +40,4 @@ public str removeComments(str text) {
 	}
 }
 
-public list[str] splitText(str text) = [ s | s <- split("\n", text), s != "", /^\s*$/ !:= s ];
+public list[str] splitText(str text) = [ s | s <- split("\n", text), /^\s*$/ !:= s ];
