@@ -9,17 +9,17 @@ import List;
 import String;
 import Set;
 
-public int unitComplexityRating(tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] unitRisks) {	
+public str unitComplexityRating(tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] unitRisks) {
 	if(unitRisks.moderateRisk <= 25 && unitRisks.highRisk <= 0 && unitRisks.veryHighRisk <= 0) {
-		return 5;
+		return "++";
 	} else if(unitRisks.moderateRisk <= 30 && unitRisks.highRisk <= 5 && unitRisks.veryHighRisk <= 0) {
-		return 4;
+		return "+";
 	} else if(unitRisks.moderateRisk <= 40 && unitRisks.highRisk <= 10 && unitRisks.veryHighRisk <= 0) {
-		return 3;
+		return "o";
 	} else if(unitRisks.moderateRisk <= 50 && unitRisks.highRisk <= 15 && unitRisks.veryHighRisk <= 5) {
-		return 2;
+		return "-";
 	}
-	return 1;
+	return "--";
 }
 
 public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] unitComplexityRisks(M3 project) {

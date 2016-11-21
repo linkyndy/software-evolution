@@ -9,17 +9,17 @@ import String;
 import Set;
 import util::Math;
 
-public int unitSizeRating(tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] methodRisks) {	
+public str unitSizeRating(tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] methodRisks) {
 	if(methodRisks.moderateRisk <= 25 && methodRisks.highRisk == 0 && methodRisks.veryHighRisk == 0) {
-		return 5;
+		return "++";
 	} else if(methodRisks.moderateRisk <= 30 && methodRisks.highRisk == 5 && methodRisks.veryHighRisk == 0) {
-		return 4;
+		return "+";
 	} else if(methodRisks.moderateRisk <= 40 && methodRisks.highRisk == 10 && methodRisks.veryHighRisk == 0) {
-		return 3;
+		return "o";
 	} else if(methodRisks.moderateRisk <= 50 && methodRisks.highRisk == 15 && methodRisks.veryHighRisk == 5) {
-		return 2;
+		return "-";
 	}
-	return 1;
+	return "--";
 }
 
 public list[int] locPerMethod(M3 project) = mapper(getMethods(project), locOfFile);
