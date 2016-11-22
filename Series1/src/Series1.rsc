@@ -10,6 +10,7 @@ import List;
 import DateTime;
 
 import Common;
+import Metrics::Duplication;
 import Metrics::Volume;
 import Metrics::UnitSize;
 import Metrics::UnitComplexity;
@@ -44,9 +45,15 @@ public void analyseProject() {
 	println("	Moderate Risk <unitComplexity.moderateRisk>%");
 	println("	High Risk <unitComplexity.highRisk>%");
 	println("	Very High Risk <unitComplexity.veryHighRisk>%");
-	
-	println("---- Clone Detection ----");
-	
+
+	println("---- Duplication ----");
+	duplicateLines = projectDuplication(project);
+	duplicatePercentage = calculatePercentage(duplicateLines, volumeSize);
+	println("Duplicate LOC: <duplicateLines> ");
+	println("Total LOC: <volumeSize> ");
+	println("Duplication percentage: <duplicatePercentage>% ");
+	println("Rating: <duplicationRating(duplicatePercentage)> ");
+
 	println("");
 	println("---- START TIME ----");
 	println(printTime(now(), "HH:mm:ss"));

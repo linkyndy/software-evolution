@@ -8,7 +8,6 @@ import String;
 
 import Common;
 
-public rel[str,int,loc] projectDuplicates(M3 project) {
 public str duplicationRating(real duplicationPercent) {
 	if(duplicationPercent <= 3) {
 		return "++";
@@ -22,6 +21,7 @@ public str duplicationRating(real duplicationPercent) {
 	return "--";
 }
 
+public int projectDuplication(M3 project) {
 	list[loc] locations = getMethods(project);
 	list[lrel[str,int,loc]] blocks = [];
 
