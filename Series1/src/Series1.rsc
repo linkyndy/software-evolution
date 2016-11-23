@@ -18,7 +18,6 @@ import Metrics::UnitComplexity;
 public void analyseProject() {
 	println("---- START TIME ----");
 	println(printTime(now(), "HH:mm:ss"));
-	println("----  END TIME  ----");
 	println("");
 	
 	project = getProjectModel();	
@@ -26,9 +25,9 @@ public void analyseProject() {
 	
 	println("---- Volume ----");
 	volumeSize = projectVolume(project);
-	println("Total LOC: <volumeSize> ");
 	println("Rating: <volumeRating(volumeSize)> ");
-	
+	println("	Total LOC: <volumeSize> ");
+
 	println("---- Unit Size ----");
 	unitRisk = unitSizeRisks(project);
 	println("Rating: <unitSizeRating(unitRisk)>");
@@ -49,13 +48,12 @@ public void analyseProject() {
 	println("---- Duplication ----");
 	duplicateLines = projectDuplication(project);
 	duplicatePercentage = calculatePercentage(duplicateLines, volumeSize);
-	println("Duplicate LOC: <duplicateLines> ");
-	println("Total LOC: <volumeSize> ");
-	println("Duplication percentage: <duplicatePercentage>% ");
 	println("Rating: <duplicationRating(duplicatePercentage)> ");
+	println("	Duplicate LOC: <duplicateLines> ");
+	println("	Total LOC: <volumeSize> ");
+	println("	Duplication percentage: <duplicatePercentage>% ");
 
 	println("");
-	println("---- START TIME ----");
 	println(printTime(now(), "HH:mm:ss"));
 	println("----  END TIME  ----");
 }
