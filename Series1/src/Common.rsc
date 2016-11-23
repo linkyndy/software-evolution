@@ -23,6 +23,20 @@ public str fileContent(loc file) = readFile(file);
 
 public real calculatePercentage(int base, int total) = toReal(base)/toReal(total)*100;
 
+public str ratingToSymbol(num rating) {
+	if (rating > 4) {
+		return "++";
+	} else if (rating > 3) {
+		return "+";
+	} else if (rating > 2) {
+		return "o";
+	} else if (rating > 1) {
+		return "-";
+	} else {
+		return "--";
+	}
+}
+
 public list[str] locOfFile(loc file) {
 	plainText = fileContent(file);
 	withoutComments = removeComments(plainText);

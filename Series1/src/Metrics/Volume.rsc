@@ -4,17 +4,17 @@ import lang::java::jdt::m3::Core;
 import List;
 import Common;
 
-public str volumeRating(int linesOfCode) {
+public int volumeRating(int linesOfCode) {
 	if(linesOfCode <= 66000) {
-		return "++";
+		return 5;
 	} else if(linesOfCode <= 246000) {
-		return "+";
+		return 4;
 	} else if(linesOfCode <= 665000) {
-		return "o";
+		return 3;
 	} else if(linesOfCode <= 1310000) {
-		return "-";
+		return 2;
 	}
-	return "--";
+	return 1;
 }
 
 public int projectVolume(M3 project) = sum(mapper(getClasses(project), countLocOfFile));

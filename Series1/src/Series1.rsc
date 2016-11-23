@@ -25,12 +25,12 @@ public void analyseProject() {
 	
 	println("---- Volume ----");
 	volumeSize = projectVolume(project);
-	println("Rating: <volumeRating(volumeSize)> ");
+	println("Rating: <ratingToSymbol(volumeRating(volumeSize))> ");
 	println("	Total LOC: <volumeSize> ");
 
 	println("---- Unit Size ----");
 	unitRisk = unitSizeRisks(project);
-	println("Rating: <unitSizeRating(unitRisk)>");
+	println("Rating: <ratingToSymbol(unitSizeRating(unitRisk))>");
 	println("	Simple Risk <unitRisk.simpleRisk>%");
 	println("	Moderate Risk <unitRisk.moderateRisk>%");
 	println("	High Risk <unitRisk.highRisk>%");
@@ -39,7 +39,7 @@ public void analyseProject() {
 	
 	println("---- Unit Complexity ----");
 	unitComplexity = unitComplexityRisks(project);
-	println("Rating: <unitComplexityRating(unitComplexity)>");
+	println("Rating: <ratingToSymbol(unitComplexityRating(unitComplexity))>");
 	println("	Simple Risk <unitComplexity.simpleRisk>%");
 	println("	Moderate Risk <unitComplexity.moderateRisk>%");
 	println("	High Risk <unitComplexity.highRisk>%");
@@ -48,7 +48,7 @@ public void analyseProject() {
 	println("---- Duplication ----");
 	duplicateLines = projectDuplication(project);
 	duplicatePercentage = calculatePercentage(duplicateLines, volumeSize);
-	println("Rating: <duplicationRating(duplicatePercentage)> ");
+	println("Rating: <ratingToSymbol(duplicationRating(duplicatePercentage))> ");
 	println("	Duplicate LOC: <duplicateLines> ");
 	println("	Total LOC: <volumeSize> ");
 	println("	Duplication percentage: <duplicatePercentage>% ");

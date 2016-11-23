@@ -8,17 +8,17 @@ import String;
 
 import Common;
 
-public str duplicationRating(real duplicationPercent) {
+public int duplicationRating(real duplicationPercent) {
 	if(duplicationPercent <= 3) {
-		return "++";
+		return 5;
 	} else if(duplicationPercent <= 5) {
-		return "+";
+		return 4;
 	} else if(duplicationPercent <= 10) {
-		return "o";
+		return 3;
 	} else if(duplicationPercent <= 20) {
-		return "-";
+		return 2;
 	}
-	return "--";
+	return 1;
 }
 
 public int projectDuplication(M3 project) {
