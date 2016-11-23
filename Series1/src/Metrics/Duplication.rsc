@@ -26,9 +26,8 @@ public int projectDuplication(M3 project) {
 	list[lrel[str,int,loc]] blocks = [];
 
 	for (location <- locations) {
-		str definition = fileContent(location);
 		// Grab method's lines, without any surrounding whitespace
-		list[str] lines = [trim(line) | line <- split("\n", definition)];
+		list[str] lines = locOfFile(location);
 
 		// Skip methods which have less than 6 lines
 		if (size(lines) < 6) continue;
