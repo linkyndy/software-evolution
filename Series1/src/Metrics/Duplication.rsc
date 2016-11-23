@@ -36,7 +36,7 @@ public int projectDuplication(M3 project) {
 		// together with their metadata (used to differentiate duplicate lines in the same
 		// method or across different methods)
 		lrel[str,int,loc] linesWithMetadata = zip(lines, index(lines), [location | _ <- upTill(size(lines))]);
-		blocks += [[a,b,c,d,e,f | [*_,a,b,c,d,e,f,*_] := linesWithMetadata]];
+		blocks += [[a,b,c,d,e,f] | [_*,a,b,c,d,e,f,_*] := linesWithMetadata];
 	}
 
 	rel[str,int,loc] duplicates = {};
