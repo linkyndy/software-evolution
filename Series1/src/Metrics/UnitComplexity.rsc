@@ -99,6 +99,12 @@ public int complexityForMethod(ast) {
 			cc += 1;
 		case \expressionStatement(_) : 
 			cc += 1;
+		case \conditional(_,_,_) : 
+			cc += 1;
+        case infix(_,"&&",_) : 
+        	cc += 1;
+        case infix(_,"||",_) :
+        	cc += 1;
 	}
 	return cc;
 }
