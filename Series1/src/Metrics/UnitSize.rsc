@@ -22,7 +22,7 @@ public str unitSizeRating(tuple[real simpleRisk, real moderateRisk, real highRis
 	return "--";
 }
 
-public list[int] locPerMethod(M3 project) = mapper(getMethods(project), locOfFile);
+public list[int] locPerMethod(M3 project) = mapper(getMethods(project), countLocOfFile);
 
 public tuple[real simpleRisk, real moderateRisk, real highRisk, real veryHighRisk] unitSizeRisks(M3 project) {
 	simpleRisk = 0;

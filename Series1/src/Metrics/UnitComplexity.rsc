@@ -66,11 +66,11 @@ public lrel[int, int] complexityPerClass(loc class) {
 	result = [];
 	visit(ast) {
 		case m:\constructor(_,_,_,_) :
-			result += <complexityForMethod(m), locOfFile(m@src)>;
+			result += <complexityForMethod(m), countLocOfFile(m@src)>;
 		case m:\method(_,_,_,_,_) :
-			result += <complexityForMethod(m), locOfFile(m@src)>;
+			result += <complexityForMethod(m), countLocOfFile(m@src)>;
 		case m:\method(_,_,_,_) :
-			result += <complexityForMethod(m), locOfFile(m@src)>;
+			result += <complexityForMethod(m), countLocOfFile(m@src)>;
 	};
 	return result;
 }
