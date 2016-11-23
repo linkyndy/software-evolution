@@ -26,6 +26,11 @@ Rating: -
         Duplicate LOC: 21271 
         Total LOC: 173793 
         Duplication percentage: 12.2392731600% 
+        
+Maintainability (overall): -
+Analysability: -
+Changeability: -
+Testability: --
 
 09:37:26
 ----  END TIME  ----
@@ -57,6 +62,11 @@ Duplicate LOC: 1741
 Total LOC: 24526 
 Duplication percentage: 7.09858925200% 
 Rating: o 
+
+Maintainability (overall): -
+Analysability: o
+Changeability: -
+Testability: --
 
 09:26:02
 ----  END TIME  ----
