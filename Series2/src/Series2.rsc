@@ -69,10 +69,10 @@ private int calculateNodeMass(node x) {
 	visit(x) {
 		case node _: mass += 1;
 	}
-	return mass
+	return mass;
 }
 
 // Determine the similarity between two AST subtrees
 private int calculateSubtreeSimilarity(node x, node y) {
-
+	return 0;
 }
