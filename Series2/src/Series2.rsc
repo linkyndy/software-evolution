@@ -14,6 +14,8 @@ import DateTime;
 import Normalize;
 
 public loc currentProject = |project://helloworld|;
+//public loc currentProject = |project://smallsql|;
+//public loc currentProject = |project://hsqldb|;
 
 public int massThreshold = 5;
 
@@ -23,19 +25,20 @@ public map[node, list[node]] buckets = ();
 
 public list[tuple[node, node]] clones = [];
 
+
+private int numberOfLines(node n) {
+	location = getLocationOfNode(n);
+	return location.end.line - location.begin.line;
+}
+
 public void analyseProject(int cloneType) {
 	println("---- START TIME ----");
 	println(printTime(now(), "HH:mm:ss"));
 	println("");
 	
-	// projectFile = |project://helloworld| ;
-	// projectFile = |project://smallsql| ;
-	// projectFile = |project://hsqldb| ;
-	
 	project = createM3FromEclipseProject(currentProject);
 	ast = createAstsFromEclipseProject(currentProject, true);
 	
-	//println(ast);
 	println("Analyzing project for clones of type <cloneType>");
 	
 	println("	Partitioning AST subtrees to buckets...");
@@ -45,9 +48,7 @@ public void analyseProject(int cloneType) {
 			if (nodeMass >= massThreshold) {
 				if (cloneType in [2, 3]) {
 					x = normalize(x);
-					println("dfdsf");
 				}
-				// Add node to bucket
 				if (buckets[x]?) {
 					buckets[x] += x;
 				} else {
@@ -58,7 +59,6 @@ public void analyseProject(int cloneType) {
 	}
 
 	
-	println("	Comparing AST subtrees from each bucket...");
 	for (bucket <- buckets) {
 		if (size(buckets[bucket]) < 2) continue;
 
@@ -93,16 +93,14 @@ public void analyseProject(int cloneType) {
 		}
 	}
 
-	println(size(clones));
-
-	//for(<x,y> <- clones) {
-	//	println("");
-	//	println("");
-	//	println("<getLocationOfNode(x)>");
-	//	println("<getLocationOfNode(y)>");
-	//	println("");
-	//	println("");
-	//}
+	for(<x,y> <- clones) {
+		println("");
+		println("");
+		println("<getLocationOfNode(x)>");
+		println("<getLocationOfNode(y)>");
+		println("");
+		println("");
+	}
 			
 	println("");
 	println(printTime(now(), "HH:mm:ss"));
@@ -153,9 +151,7 @@ private real calculateSubtreeSimilarity(node x, node y) {
 	s = size(xNodes & yNodes);
 	l = size(xNodes - yNodes);
 	r = size(yNodes - xNodes);
-
-	println("<size(xNodes)> <size(yNodes)> <s> <l> <r>");
-
+	
 	return (2.0 * s) / (2 * s + l + r);
 }
 
