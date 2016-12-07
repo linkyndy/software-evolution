@@ -40,7 +40,7 @@ public void analyseProject(int cloneType) {
 			nodeMass = calculateNodeMass(x);
 			if (nodeMass >= massThreshold) {
 				if (cloneType in [2, 3]) {
-					// Normalize node
+					x = normalize(x);
 				}
 				// Add node to bucket
 			}
@@ -52,6 +52,7 @@ public void analyseProject(int cloneType) {
 		// for each tuple of 2 nodes from current bucket {
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
 			if (subtreeSimilarity >= similarityThreshold) {
+				println("test");
 				// Add to clone list
 				// Remove already added sub-clones
 			}
