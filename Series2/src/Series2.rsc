@@ -13,23 +13,27 @@ import DateTime;
 
 import Normalize;
 
+public loc currentProject = |project://helloworld|;
+
 public int massThreshold = 5;
 
-public int similarityThreshold = 10;
+public real similarityThreshold = 1.0;
 
-public map[str, list[node]] buckets = ();
+public map[node, list[node]] buckets = ();
+
+public list[tuple[node, node]] clones = [];
 
 public void analyseProject(int cloneType) {
 	println("---- START TIME ----");
 	println(printTime(now(), "HH:mm:ss"));
 	println("");
 	
-	projectFile = |project://helloworld| ;
+	// projectFile = |project://helloworld| ;
 	// projectFile = |project://smallsql| ;
 	// projectFile = |project://hsqldb| ;
 	
-	project = createM3FromEclipseProject(projectFile);
-	ast = createAstsFromEclipseProject(projectFile, true);
+	project = createM3FromEclipseProject(currentProject);
+	ast = createAstsFromEclipseProject(currentProject, true);
 	
 	//println(ast);
 	println("Analyzing project for clones of type <cloneType>");
@@ -41,27 +45,88 @@ public void analyseProject(int cloneType) {
 			if (nodeMass >= massThreshold) {
 				if (cloneType in [2, 3]) {
 					x = normalize(x);
+					println("dfdsf");
 				}
 				// Add node to bucket
+				if (buckets[x]?) {
+					buckets[x] += x;
+				} else {
+					buckets[x] = [x];
+				}
 			}
 		}
 	}
+
 	
 	println("	Comparing AST subtrees from each bucket...");
 	for (bucket <- buckets) {
-		// for each tuple of 2 nodes from current bucket {
+		if (size(buckets[bucket]) < 2) continue;
+
+		for ([x, y] <- combinations(buckets[bucket])) {
+			//println("<x>, <y>");
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
+			//println("<subtreeSimilarity> <similarityThreshold>");
 			if (subtreeSimilarity >= similarityThreshold) {
-				println("test");
-				// Add to clone list
 				// Remove already added sub-clones
+				visit (x) {
+					case node n: {
+						for (<c1, c2> <- clones) {
+							if (c1 == n || c2 == n) {
+								clones = delete(clones, indexOf(clones, <c1, c2>));
+							}
+						}
+					}
+				}
+				visit (y) {
+					case node n: {
+						clones2 = clones;
+						for (<c1, c2> <- clones) {
+							if (c1 == n || c2 == n) {
+								clones = delete(clones, indexOf(clones, <c1, c2>));
+							}
+						}
+					}
+				}
+				// Add to clone list
+				clones += <x, y>;
 			}
-		// }
+		}
 	}
+
+	println(size(clones));
+
+	//for(<x,y> <- clones) {
+	//	println("");
+	//	println("");
+	//	println("<getLocationOfNode(x)>");
+	//	println("<getLocationOfNode(y)>");
+	//	println("");
+	//	println("");
+	//}
 			
 	println("");
 	println(printTime(now(), "HH:mm:ss"));
 	println("----  END TIME  ----");
+}
+
+public loc getLocationOfNode(node subTree) {
+	loc location = currentProject;
+
+	if (Declaration d := subTree) {
+		if (d@src?) {
+			location = d@src;
+		}
+	} else if (Expression e := subTree) {
+		if (e@src?) {
+			location = e@src;
+		}
+	} else if (Statement s := subTree) {
+		if (s@src?) {
+			location = s@src;
+		}
+	}
+
+	return location;
 }
 
 // Determine the number of nodes present in AST subtree with root x
@@ -74,6 +139,26 @@ private int calculateNodeMass(node x) {
 }
 
 // Determine the similarity between two AST subtrees
-private int calculateSubtreeSimilarity(node x, node y) {
-	return 0;
+private real calculateSubtreeSimilarity(node x, node y) {
+	list[node] xNodes = [];
+	list[node] yNodes = [];
+
+	visit(x) {
+		case node n: xNodes += n;
+	}
+	visit(y) {
+		case node n: yNodes += n;
+	}
+
+	s = size(xNodes & yNodes);
+	l = size(xNodes - yNodes);
+	r = size(yNodes - xNodes);
+
+	println("<size(xNodes)> <size(yNodes)> <s> <l> <r>");
+
+	return (2.0 * s) / (2 * s + l + r);
 }
+
+public list[list[node]] combinations(list[node] nodes) {
+	return [[nodes[i], nodes[j]] | i <- [0..(size(nodes) - 1)], j <- [(i+1)..(size(nodes))]];
+ }
