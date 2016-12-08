@@ -7,15 +7,11 @@ import lang::java::m3::AST;
 import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
-
 import List;
 import DateTime;
 
 import Normalize;
-
-public loc currentProject = |project://helloworld|;
-//public loc currentProject = |project://smallsql|;
-//public loc currentProject = |project://hsqldb|;
+import Common;
 
 public int massThreshold = 5;
 
@@ -36,8 +32,8 @@ public void analyseProject(int cloneType) {
 	println(printTime(now(), "HH:mm:ss"));
 	println("");
 	
-	project = createM3FromEclipseProject(currentProject);
-	ast = createAstsFromEclipseProject(currentProject, true);
+	project = getProjectFile(); //createM3FromEclipseProject(currentProject);
+	ast = getProjectAST(); //createAstsFromEclipseProject(currentProject, true);
 	
 	println("Analyzing project for clones of type <cloneType>");
 	
