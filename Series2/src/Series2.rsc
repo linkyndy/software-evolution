@@ -58,7 +58,7 @@ public void analyseProject(int cloneType) {
 	for (bucket <- buckets) {
 		if (size(buckets[bucket]) < 2) continue;
 
-		for ([x, y] <- combinations(buckets[bucket])) {
+		for (<x, y> <- combinations(buckets[bucket])) {
 			//println("<x>, <y>");
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
 			//println("<subtreeSimilarity> <similarityThreshold>");
@@ -151,6 +151,6 @@ private real calculateSubtreeSimilarity(node x, node y) {
 	return (2.0 * s) / (2 * s + l + r);
 }
 
-public list[list[node]] combinations(list[node] nodes) {
-	return [[nodes[i], nodes[j]] | i <- [0..(size(nodes) - 1)], j <- [(i+1)..(size(nodes))]];
+public lrel[node, node] combinations(list[node] nodes) {
+	return [<nodes[i], nodes[j]> | i <- [0..(size(nodes) - 1)], j <- [(i+1)..(size(nodes))]];
  }
