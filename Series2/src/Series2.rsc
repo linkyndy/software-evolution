@@ -59,9 +59,9 @@ public void analyseProject(int cloneType) {
 		}
 	}
 
+	println("	Sorting buckets by their subtree\'s node mass...");
 	// Have a sorted list of buckets based on their sub tree mass
 	bucketMasses = sort(bucketMasses, bool(tuple[node, int] a, tuple[node, int] b) { return a[1] < b[1]; });
-
 	
 	// Iterate over all sorted buckets and compare each bucket's subtrees for similarity
 	for (<subTree, _> <- bucketMasses) {
@@ -142,6 +142,7 @@ private real calculateSubtreeSimilarity(node x, node y) {
 	return (2.0 * s) / (2 * s + l + r);
 }
 
+// Generate all combinations of two nodes from given input list
 public lrel[node, node] combinations(list[node] nodes) {
 	return [<nodes[i], nodes[j]> | i <- [0..(size(nodes) - 1)], j <- [(i+1)..(size(nodes))]];
 }
