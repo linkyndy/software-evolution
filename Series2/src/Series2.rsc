@@ -23,7 +23,7 @@ public map[node, list[node]] buckets = ();
 // over buckets in ascending order of their sub tree mass
 public lrel[node, int] bucketMasses = [];
 
-public list[tuple[node, node]] clones = [];
+public list[tuple[loc, loc]] clones = [];
 
 
 private int numberOfLines(node n) {
@@ -75,7 +75,11 @@ public void analyseProject(int cloneType) {
 				removeAlreadyAddedSubClones(x);
 				removeAlreadyAddedSubClones(y);
 				// Add to clone list
-				clones += <x, y>;
+				// TODO: if statement should be removed after fixing how the location is gotten for a node
+				if (getLocationOfNode(x) != currentProject && getLocationOfNode(y) != currentProject) {
+					clones += <getLocationOfNode(x), getLocationOfNode(y)>;
+					//println("<getLocationOfNode(x)> AND <getLocationOfNode(y)>");
+				}
 			}
 		}
 	}
