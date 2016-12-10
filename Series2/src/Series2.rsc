@@ -72,26 +72,8 @@ public void analyseProject(int cloneType) {
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
 			//println("<subtreeSimilarity> <similarityThreshold>");
 			if (subtreeSimilarity >= similarityThreshold) {
-				// Remove already added sub-clones
-				visit (x) {
-					case node n: {
-						for (<c1, c2> <- clones) {
-							if (c1 == n || c2 == n) {
-								clones = delete(clones, indexOf(clones, <c1, c2>));
-							}
-						}
-					}
-				}
-				visit (y) {
-					case node n: {
-						clones2 = clones;
-						for (<c1, c2> <- clones) {
-							if (c1 == n || c2 == n) {
-								clones = delete(clones, indexOf(clones, <c1, c2>));
-							}
-						}
-					}
-				}
+				removeAlreadyAddedSubClones(x);
+				removeAlreadyAddedSubClones(y);
 				// Add to clone list
 				clones += <x, y>;
 			}
@@ -162,4 +144,18 @@ private real calculateSubtreeSimilarity(node x, node y) {
 
 public lrel[node, node] combinations(list[node] nodes) {
 	return [<nodes[i], nodes[j]> | i <- [0..(size(nodes) - 1)], j <- [(i+1)..(size(nodes))]];
- }
+}
+
+// Remove sub clones of x that were already added to the clones list. Since we only care for clones,
+// we are not interested in keeping sub clones of them also
+private void removeAlreadyAddedSubClones(node x) {
+	visit (x) {
+		case node n: {
+			for (<c1, c2> <- clones) {
+				if (c1 == n || c2 == n) {
+					clones = delete(clones, indexOf(clones, <c1, c2>));
+				}
+			}
+		}
+	}
+}
