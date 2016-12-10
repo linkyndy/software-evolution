@@ -19,6 +19,10 @@ public real similarityThreshold = 1.0;
 
 public map[node, list[node]] buckets = ();
 
+// Store the associated mass for each sub tree. We need this in order to iterate
+// over buckets in ascending order of their sub tree mass
+public lrel[node, int] bucketMasses = [];
+
 public list[tuple[node, node]] clones = [];
 
 
@@ -50,15 +54,20 @@ public void analyseProject(int cloneType) {
 				} else {
 					buckets[x] = [x];
 				}
+				bucketMasses += <x, nodeMass>;
 			}
 		}
 	}
 
-	
-	for (bucket <- buckets) {
-		if (size(buckets[bucket]) < 2) continue;
+	// Have a sorted list of buckets based on their sub tree mass
+	bucketMasses = sort(bucketMasses, bool(tuple[node, int] a, tuple[node, int] b) { return a[1] < b[1]; });
 
-		for (<x, y> <- combinations(buckets[bucket])) {
+	
+	// Iterate over all sorted buckets and compare each bucket's subtrees for similarity
+	for (<subTree, _> <- bucketMasses) {
+		if (size(buckets[subTree]) < 2) continue;
+
+		for (<x, y> <- combinations(buckets[subTree])) {
 			//println("<x>, <y>");
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
 			//println("<subtreeSimilarity> <similarityThreshold>");
