@@ -85,57 +85,57 @@ public void analyseProject(int cloneType) {
 	}
 
 	println("	Detecting and grouping clone sequences... [skipped]");
-	bool isItOk = true;
-	while (!isItOk) {
-		set[tuple[loc, loc]] pairsToBeDeleted = {};
-		isItOk = true;
-		for (<x, y> <- clones) {
-			//println("X= <x>");
-			<xStart, xEnd> = <x.begin.line, x.end.line>;
-			<yStart, yEnd> = <y.begin.line, y.end.line>;
-
-			// TODO: Skip pairs if their filename is different
-			for (<z, t> <- clones, <z, t> != <x, y>) {
-				//println("Z= <z>");
-				<zStart, zEnd> = <z.begin.line, z.end.line>;
-				<tStart, tEnd> = <t.begin.line, t.end.line>;
-
-				if (zStart == xEnd + 1 && tStart == yEnd + 1) {
-					// Remove individual clone pairs
-					//clones = delete(clones, indexOf(clones, <x, y>));
-					//clones = delete(clones, indexOf(clones, <z, t>));
-					pairsToBeDeleted += {<x, y>, <z, t>};
-					// Add sequence to list
-					xzLocation = x;
-					xzLocation.begin.line = xStart;
-					xzLocation.end.line = zEnd;
-					ytLocation = y;
-					ytLocation.begin.line = yStart;
-					ytLocation.end.line = tEnd;
-					clones += <xzLocation, ytLocation>;
-					isItOk = false;
-					clones = clones - toList(pairsToBeDeleted);
-					break;
-				} else if (zEnd + 1 == xStart && tEnd + 1 == yStart) {
-					// Remove individual clone pairs
-					//clones = delete(clones, indexOf(clones, <x, y>));
-					//clones = delete(clones, indexOf(clones, <z, t>));
-					pairsToBeDeleted += {<x, y>, <z, t>};
-					// Add sequence to list
-					zxLocation = x;
-					zxLocation.begin.line = zStart;
-					zxLocation.end.line = xEnd;
-					tyLocation = y;
-					tyLocation.begin.line = tStart;
-					tyLocation.end.line = yEnd;
-					clones += <zxLocation, tyLocation>;
-					isItOk = false;
-					clones = clones - toList(pairsToBeDeleted);
-					break;
-				}
-			}
-		}
-	}
+	//bool isItOk = true;
+	//while (!isItOk) {
+	//	set[tuple[loc, loc]] pairsToBeDeleted = {};
+	//	isItOk = true;
+	//	for (<x, y> <- clones) {
+	//		//println("X= <x>");
+	//		<xStart, xEnd> = <x.begin.line, x.end.line>;
+	//		<yStart, yEnd> = <y.begin.line, y.end.line>;
+	//
+	//		// TODO: Skip pairs if their filename is different
+	//		for (<z, t> <- clones, <z, t> != <x, y>) {
+	//			//println("Z= <z>");
+	//			<zStart, zEnd> = <z.begin.line, z.end.line>;
+	//			<tStart, tEnd> = <t.begin.line, t.end.line>;
+	//
+	//			if (zStart == xEnd + 1 && tStart == yEnd + 1) {
+	//				// Remove individual clone pairs
+	//				//clones = delete(clones, indexOf(clones, <x, y>));
+	//				//clones = delete(clones, indexOf(clones, <z, t>));
+	//				pairsToBeDeleted += {<x, y>, <z, t>};
+	//				// Add sequence to list
+	//				xzLocation = x;
+	//				xzLocation.begin.line = xStart;
+	//				xzLocation.end.line = zEnd;
+	//				ytLocation = y;
+	//				ytLocation.begin.line = yStart;
+	//				ytLocation.end.line = tEnd;
+	//				clones += <xzLocation, ytLocation>;
+	//				isItOk = false;
+	//				clones = clones - toList(pairsToBeDeleted);
+	//				break;
+	//			} else if (zEnd + 1 == xStart && tEnd + 1 == yStart) {
+	//				// Remove individual clone pairs
+	//				//clones = delete(clones, indexOf(clones, <x, y>));
+	//				//clones = delete(clones, indexOf(clones, <z, t>));
+	//				pairsToBeDeleted += {<x, y>, <z, t>};
+	//				// Add sequence to list
+	//				zxLocation = x;
+	//				zxLocation.begin.line = zStart;
+	//				zxLocation.end.line = xEnd;
+	//				tyLocation = y;
+	//				tyLocation.begin.line = tStart;
+	//				tyLocation.end.line = yEnd;
+	//				clones += <zxLocation, tyLocation>;
+	//				isItOk = false;
+	//				clones = clones - toList(pairsToBeDeleted);
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}
 
 	for(<x,y> <- clones) {
 		println("");
