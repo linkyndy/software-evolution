@@ -13,20 +13,23 @@ import DateTime;
 import Normalize;
 import Common;
 
+// Minimum number of sub nodes an AST node must have in order to be eligible
+// for the clone detection algorithm
 public int massThreshold = 5;
 
 // Similarity values for which pairs of sub trees are eligible for the clone
 // detection algorithm. Each type of clone has a different value
 public map[int, real] similarityThreshold = (1: 1.0, 2: 1.0, 3: 0.5);
 
+// Similar sub trees are put in the same bucket for easier comparison in the next steps
 public map[node, list[node]] buckets = ();
 
 // Store the associated mass for each sub tree. We need this in order to iterate
 // over buckets in ascending order of their sub tree mass
 public lrel[node, int] bucketMasses = [];
 
+// List holding pairs of clones
 public list[tuple[loc, loc]] clones = [];
-
 
 private int numberOfLines(node n) {
 	location = getLocationOfNode(n);
@@ -71,9 +74,7 @@ public void analyseProject(int cloneType) {
 		if (size(buckets[subTree]) < 2) continue;
 
 		for (<x, y> <- combinations(buckets[subTree])) {
-			//println("<x>, <y>");
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
-			//println("<subtreeSimilarity> <similarityThreshold>");
 
 			if (subtreeSimilarity >= similarityThreshold[cloneType]) {
 				removeAlreadyAddedSubClones(x);
@@ -82,8 +83,6 @@ public void analyseProject(int cloneType) {
 			}
 		}
 	}
-
-	//println(clones);
 
 	println("	Detecting and grouping clone sequences... [skipped]");
 	bool isItOk = true;
@@ -141,8 +140,8 @@ public void analyseProject(int cloneType) {
 	for(<x,y> <- clones) {
 		println("");
 		println("");
-		println("<getLocationOfNode(x)>");
-		println("<getLocationOfNode(y)>");
+		println("<x>");
+		println("<y>");
 		println("");
 		println("");
 	}
