@@ -15,7 +15,9 @@ import Common;
 
 public int massThreshold = 5;
 
-public real similarityThreshold = 1.0;
+// Similarity values for which pairs of sub trees are eligible for the clone
+// detection algorithm. Each type of clone has a different value
+public map[int, real] similarityThreshold = (1: 1.0, 2: 1.0, 3: 0.5);
 
 public map[node, list[node]] buckets = ();
 
@@ -72,7 +74,8 @@ public void analyseProject(int cloneType) {
 			//println("<x>, <y>");
 			subtreeSimilarity = calculateSubtreeSimilarity(x, y);
 			//println("<subtreeSimilarity> <similarityThreshold>");
-			if (subtreeSimilarity >= similarityThreshold) {
+
+			if (subtreeSimilarity >= similarityThreshold[cloneType]) {
 				removeAlreadyAddedSubClones(x);
 				removeAlreadyAddedSubClones(y);
 				// Add to clone list
