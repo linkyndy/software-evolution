@@ -210,8 +210,9 @@ public lrel[node, node] combinations(list[node] nodes) {
 private void removeAlreadyAddedSubClones(node x) {
 	visit (x) {
 		case node n: {
+			nodeLocation = getLocationOfNode(n);
 			for (<c1, c2> <- clones) {
-				if (c1 == n || c2 == n) {
+				if (c1 == nodeLocation || c2 == nodeLocation) {
 					clones = delete(clones, indexOf(clones, <c1, c2>));
 				}
 			}
