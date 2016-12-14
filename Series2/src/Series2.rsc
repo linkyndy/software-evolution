@@ -78,12 +78,7 @@ public void analyseProject(int cloneType) {
 			if (subtreeSimilarity >= similarityThreshold[cloneType]) {
 				removeAlreadyAddedSubClones(x);
 				removeAlreadyAddedSubClones(y);
-				// Add to clone list
-				// TODO: if statement should be removed after fixing how the location is gotten for a node
-				if (getLocationOfNode(x) != currentProject && getLocationOfNode(y) != currentProject) {
-					clones += <getLocationOfNode(x), getLocationOfNode(y)>;
-					//println("<getLocationOfNode(x)> AND <getLocationOfNode(y)>");
-				}
+				addClonePair(x, y);
 			}
 		}
 	}
@@ -221,5 +216,12 @@ private void removeAlreadyAddedSubClones(node x) {
 				}
 			}
 		}
+	}
+}
+
+private void addClonePair(node x, node y) {
+	// TODO: if statement should be removed after fixing how the location is gotten for a node
+	if (getLocationOfNode(x) != currentProject && getLocationOfNode(y) != currentProject) {
+		clones += <getLocationOfNode(x), getLocationOfNode(y)>;
 	}
 }
