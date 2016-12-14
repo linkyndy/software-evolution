@@ -40,3 +40,26 @@ public lrel[str name, loc location] methodsFromClass(loc class) {
 	};
 	return result;
 }
+
+public list[str] locOfFile(loc file) {
+	plainText = fileContent(file);
+	withoutComments = removeComments(plainText);
+	listText = splitText(withoutComments);
+	return listText;
+}
+public int countLocOfFile(loc file) = size(locOfFile(file));
+
+private list[str] splitText(str text) = [ s | s <- split("\n", text), /^\s*$/ !:= s ];
+
+private str removeComments(str text) {
+	return visit(text) {
+		case /\/\*.*?\*\//s => "" // multi line comments
+		case /\/\/.*/ => "" // single line comments
+	}
+}
+
+public int projectVolume(M3 project) = sum(mapper(getClasses(project), countLocOfFile));
+
+public int numberOfLines(loc location) {
+	return location.end.line - location.begin.line;
+}

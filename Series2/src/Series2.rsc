@@ -8,7 +8,9 @@ import lang::java::jdt::m3::Core;
 import lang::java::jdt::m3::AST;
 
 import List;
+import Map;
 import DateTime;
+import util::Math;
 
 import Normalize;
 import Common;
@@ -30,11 +32,6 @@ public lrel[node, int] bucketMasses = [];
 
 // List holding pairs of clones
 public list[tuple[loc, loc]] clones = [];
-
-private int numberOfLines(node n) {
-	location = getLocationOfNode(n);
-	return location.end.line - location.begin.line;
-}
 
 public void analyseProject(int cloneType) {
 	println("---- START TIME ----");
@@ -145,6 +142,12 @@ public void analyseProject(int cloneType) {
 		println("");
 		println("");
 	}
+
+	println("% of duplicated lines: <toReal(countDuplicateLines()) / toReal(projectVolume(currentProject)) * 100>");
+	println("Number of clones: <size(clones)>");
+	println("Number of clone classes: <size(buckets)>");
+	println("biggest clone (in lines)");
+	println("biggest clone class");
 			
 	println("");
 	println(printTime(now(), "HH:mm:ss"));
@@ -224,4 +227,12 @@ private void addClonePair(node x, node y) {
 	if (getLocationOfNode(x) != currentProject && getLocationOfNode(y) != currentProject) {
 		clones += <getLocationOfNode(x), getLocationOfNode(y)>;
 	}
+}
+
+private int countDuplicateLines() {
+	count = 0;
+	for (<c, _> <- clones) {
+		count += numberOfLines(c) * 2;
+	}
+	return count;
 }
