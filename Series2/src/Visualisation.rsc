@@ -7,6 +7,9 @@ import lang::java::jdt::m3::AST;
 
 import Relation;
 import String;
+import Map;
+import List;
+import Set;
 
 import vis::Figure;
 import vis::Render;
@@ -17,9 +20,11 @@ import Common;
 
 private M3 projectFile;
 private list[loc] projectClasses;
+public list[tuple[loc, loc]] clones = [];
 
-public void vis() {
-	projectFile = getProjectFile();
+public void vis(M3 project, list[tuple[loc,loc]] c) {
+	projectFile = project;
+	clones = c;
 	projectClasses = getClasses(projectFile);
 
 
@@ -66,9 +71,21 @@ public str nameForLocation(loc cl) {
 }
 
 private bool hasClones(loc file) {
-	str fileName = "<file>";
-	if(size(fileName) % 2 == 0) {
-		return true;
+	//println("<nameForLocation(file)>");
+	for(<x,y> <- clones) {
+		//println("<file.begin.line> lt <x.begin.line> && <file.end.line> gt <x.end.line>");
+		if(file.begin.line-1 <= x.begin.line && file.end.line+1 >= x.end.line) {
+			return true;
+		}
+		//println("<file.begin.line> lt <y.begin.line> && <file.end.line> gt <y.end.line>");
+		if(file.begin.line-1 <= y.begin.line && file.end.line+1 >= y.end.line) {
+			return true;
+		}
 	}
 	return false;
+}
+
+private bool showClass(loc class) {
+	allCloneClasses = toList(domain(cloneClasses(clones)));
+	return indexOf(allCloneClasses, cloneClass(class)) >= 0;
 }

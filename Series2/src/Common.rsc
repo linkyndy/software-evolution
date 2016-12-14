@@ -17,7 +17,7 @@ public loc currentProject = |project://helloworld|;
 //public loc currentProject = |project://hsqldb|;
 
 public M3 getProjectFile() = createM3FromEclipseProject(currentProject);
-public set[Declaration] getProjectAST() = createAstsFromEclipseProject(currentProject, true);
+public set[Declaration] getProjectAST() = createAstsFromEclipseProject(currentProject, false);
 
 public list[loc] getClasses(M3 project) = toList(classes(project));
 public int countClasses(M3 project) = size(getClasses(project));
@@ -48,6 +48,7 @@ public list[str] locOfFile(loc file) {
 	return listText;
 }
 public int countLocOfFile(loc file) = size(locOfFile(file));
+public str fileContent(loc file) = readFile(file);
 
 private list[str] splitText(str text) = [ s | s <- split("\n", text), /^\s*$/ !:= s ];
 
@@ -62,4 +63,38 @@ public int projectVolume(M3 project) = sum(mapper(getClasses(project), countLocO
 
 public int numberOfLines(loc location) {
 	return location.end.line - location.begin.line;
+}
+
+
+public map[str, int] cloneClasses(list[tuple[loc, loc]] clones) {
+	list[str] classes = [];
+	for(<x,y> <- clones) {
+		classes += cloneClass(x);
+		classes += cloneClass(y); 
+	}
+	dist = distribution(classes);
+	return dist;
+}
+public str cloneClass(loc location) {
+	return head(split(".", location.file));
+}
+public str getBiggestCloneClass(list[tuple[loc, loc]] clones) {
+	str biggest = "";
+	int size = 0;
+	for(<x,y> <- clones) {
+		if(numberOfLines(x) > size) {
+			biggest = cloneClass(x);
+		}
+	}
+	return biggest;
+}
+public tuple[loc l1, loc l2] getBiggestClone(list[tuple[loc,loc]] clones) {
+	tuple[loc,loc] biggest;
+	int size = 0;
+	for(<x,y> <- clones) {
+		if(numberOfLines(x) > size) {
+			biggest = <x,y>;
+		}
+	}
+	return biggest;	
 }
