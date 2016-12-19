@@ -31,7 +31,7 @@ public map[int, real] similarityThreshold = (1: 1.0, 2: 1.0, 3: 0.5);
 public map[node, list[node]] buckets = ();
 // Store the associated mass for each sub tree. We need this in order to iterate
 // over buckets in ascending order of their sub tree mass
-public lrel[node, int] bucketMasses = [];
+public rel[node, int] bucketMasses = {};
 	
 // List holding pairs of clones
 public list[tuple[loc, loc]] clones = [];
@@ -62,11 +62,11 @@ public list[tuple[loc, loc]] detectClones(int cloneType, M3 projectFile, set[Dec
 
 	println("	Sorting buckets by their subtree\'s node mass...");
 	// Have a sorted list of buckets based on their sub tree mass
-	bucketMasses = sort(bucketMasses, bool(tuple[node, int] a, tuple[node, int] b) { return a[1] < b[1]; });
+	lrel[node, int] sortedBucketMasses = sort(bucketMasses, bool(tuple[node, int] a, tuple[node, int] b) { return a[1] < b[1]; });
 	
 	println("	Comparing AST subtrees from each bucket...");
 	// Iterate over all sorted buckets and compare each bucket's subtrees for similarity
-	for (<subTree, _> <- bucketMasses) {
+	for (<subTree, _> <- sortedBucketMasses) {
 		if (size(buckets[subTree]) < 2) continue;
 
 		for (<x, y> <- combinations(buckets[subTree])) {
