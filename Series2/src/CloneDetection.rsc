@@ -21,7 +21,7 @@ public set[Declaration] ast;
 
 // Minimum number of sub nodes an AST node must have in order to be eligible
 // for the clone detection algorithm
-public int massThreshold = 5;
+public int massThreshold = 7;
 
 // Similarity values for which pairs of sub trees are eligible for the clone
 // detection algorithm. Each type of clone has a different value
